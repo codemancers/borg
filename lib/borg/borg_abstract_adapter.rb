@@ -119,7 +119,7 @@ module Borg
         n.times do |index|
           test_files = @redis_connection.rpop(key)
           if(test_files)
-            local_pids << Process.fork { block.call(index) }
+            local_pids << Process.fork { block.call(index,test_files) }
           else
             redis_has_files = false
             break
