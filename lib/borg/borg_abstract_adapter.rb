@@ -99,5 +99,41 @@ module Borg
     def config
       ActiveRecord::Base.configurations
     end
+
+    def redis
+      Redis.new(:host => Borg::Config.redis_ip,:port => Borg::Config.redis_port)
+    end
+
+    def add_files_to_redis(files,key)
+      redis.del key
+      files.each { |x| redis.rpush(key, x.join(",")) }
+    end
+
+    def remove_file_groups_from_redis(key,&block)
+      redis_has_files = true
+      @redis_connection = redis
+      all_status = []
+
+      loop do
+        local_pids = []
+        n.times do |index|
+          test_files = @redis_connection.rpop(key)
+          if(test_files)
+            local_pids << Process.fork { block.call(index) }
+          else
+            redis_has_files = false
+            break
+          end
+        end
+
+        Signal.trap 'SIGINT', lambda { local_pids.each { |p| Process.kill("KILL", p) }; exit 1 }
+        all_status += Process.waitall.map { |pid, status| status.exitstatus }
+        break unless redis_has_files
+      end #end of loop
+
+      raise "Error running #{key} tests" if (all_status.any? { |x| x != 0 })
+
+    end #end of method remove_file_groups_from_redis
+    
   end
 end
