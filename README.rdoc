@@ -1,6 +1,9 @@
-= tickle
+= Borg
 
-Description goes here.
+Borg is a distributed test runner for running you unit/functionals tests, specs or cucumber scenarios, across a network of machines.
+
+It is written using EventMachine and Redis and has rather very design at its heart. 
+
 
 == Contributing to tickle
  
