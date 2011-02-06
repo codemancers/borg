@@ -24,8 +24,21 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "borg.gemspec",
+    "lib/borg.rb",
+    "lib/borg/borg_abstract_adapter.rb",
+    "lib/borg/borg_config.rb",
+    "lib/borg/borg_cucumber.rb",
+    "lib/borg/borg_git.rb",
+    "lib/borg/borg_messages.rb",
+    "lib/borg/borg_requestor.rb",
+    "lib/borg/borg_server.rb",
+    "lib/borg/borg_tasks.rake",
+    "lib/borg/borg_test_unit.rb",
+    "lib/borg/borg_worker.rb",
+    "lib/borg/railtie.rb",
     "test/helper.rb",
-    "test/test_tickle.rb"
+    "test/test_borg.rb"
   ]
   s.homepage = %q{http://github.com/gnufied/borg}
   s.licenses = ["MIT"]
@@ -34,7 +47,7 @@ Gem::Specification.new do |s|
   s.summary = %q{A distributed Test Suite runner for Rails, using Eventmachine and Redis}
   s.test_files = [
     "test/helper.rb",
-    "test/test_tickle.rb"
+    "test/test_borg.rb"
   ]
 
   if s.respond_to? :specification_version then

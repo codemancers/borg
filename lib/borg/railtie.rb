@@ -1,4 +1,3 @@
-require File.join(File.dirname(__FILE__),'borg_runner')
 require 'rails'
 require "eventmachine"
 require "redis"
