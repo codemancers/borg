@@ -2,7 +2,8 @@
 
 Borg is a distributed test runner for running you unit/functionals tests, specs or cucumber scenarios, across a network of machines.
 
-It is written using EventMachine and Redis and has rather very design at its heart. 
+It is written using EventMachine and Redis and has rather very simple design at its heart. 
+More details forthcoming..
 
 
 == Contributing to tickle
