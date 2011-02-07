@@ -5,7 +5,7 @@ module Borg
     def run(n = 3)
       redirect_stdout()
       load_environment('test')
-      remove_file_groups_from_redis('tests') do |index,test_files|
+      remove_file_groups_from_redis('tests',n) do |index,test_files|
         prepare_databse(index) unless try_migration_first(index)
         test_files.split(',').each do |fl|
           load(Rails.root.to_s + fl)

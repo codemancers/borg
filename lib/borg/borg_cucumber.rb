@@ -6,7 +6,7 @@ module Borg
       redirect_stdout()
       load_environment('cucumber')
 
-      remove_file_groups_from_redis('cucumber') do |index,feature_files|
+      remove_file_groups_from_redis('cucumber',n) do |index,feature_files|
         prepare_databse(index) unless try_migration_first(index)
         full_feature_path = feature_files.split(',').map do |fl|
           Rails.root.to_s + fl

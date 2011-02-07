@@ -109,14 +109,14 @@ module Borg
       files.each { |x| redis.rpush(key, x.join(",")) }
     end
 
-    def remove_file_groups_from_redis(key,&block)
+    def remove_file_groups_from_redis(key,process_count,&block)
       redis_has_files = true
       @redis_connection = redis
       all_status = []
 
       loop do
         local_pids = []
-        n.times do |index|
+        process_count.times do |index|
           test_files = @redis_connection.rpop(key)
           if(test_files)
             local_pids << Process.fork { block.call(index,test_files) }
