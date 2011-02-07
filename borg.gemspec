@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{borg}
-  s.version = "0.0.6"
+  s.version = "0.0.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Hemant Kumar", "Karunakar"]
@@ -14,7 +14,8 @@ Gem::Specification.new do |s|
   s.email = %q{hkumar@crri.co.in}
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.rdoc",
+    "TODO"
   ]
   s.files = [
     ".document",
@@ -23,6 +24,7 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
+    "TODO",
     "VERSION",
     "borg.gemspec",
     "lib/borg.rb",
