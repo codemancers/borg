@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Hemant Kumar", "Karunakar"]
-  s.date = %q{2011-02-06}
+  s.date = %q{2011-02-07}
   s.description = %q{A distributed Test Suite runner for Rails, using Eventmachine and Redis}
   s.email = %q{hkumar@crri.co.in}
   s.extra_rdoc_files = [
@@ -36,21 +36,16 @@ Gem::Specification.new do |s|
     "lib/borg/borg_tasks.rake",
     "lib/borg/borg_test_unit.rb",
     "lib/borg/borg_worker.rb",
-    "lib/borg/railtie.rb",
-    "test/helper.rb",
-    "test/test_borg.rb"
+    "lib/borg/railtie.rb"
   ]
   s.homepage = %q{http://github.com/gnufied/borg}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.4.1}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{A distributed Test Suite runner for Rails, using Eventmachine and Redis}
-  s.test_files = [
-    "test/helper.rb",
-    "test/test_borg.rb"
-  ]
 
   if s.respond_to? :specification_version then
+    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
@@ -58,17 +53,20 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<redis>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.2"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
     else
       s.add_dependency(%q<eventmachine>, [">= 0"])
       s.add_dependency(%q<redis>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
+      s.add_dependency(%q<rspec>, [">= 0"])
     end
   else
     s.add_dependency(%q<eventmachine>, [">= 0"])
     s.add_dependency(%q<redis>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
+    s.add_dependency(%q<rspec>, [">= 0"])
   end
 end
 

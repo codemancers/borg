@@ -1,5 +1,5 @@
-module Tickle
+module Borg
   VERSION = "0.0.1"
-  require 'tickle/railtie'
+  require 'borg/railtie'
 end
 

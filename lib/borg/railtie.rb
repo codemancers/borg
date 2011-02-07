@@ -8,7 +8,6 @@ require File.join(File.dirname(__FILE__),'borg_git')
 require File.join(File.dirname(__FILE__),'borg_messages')
 
 require File.join(File.dirname(__FILE__),'borg_requestor')
-require File.join(File.dirname(__FILE__),'borg_runner')
 require File.join(File.dirname(__FILE__),'borg_server')
 
 require File.join(File.dirname(__FILE__),'borg_test_unit')

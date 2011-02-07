@@ -24,16 +24,20 @@ module Borg
 
     def update_code
       source_control = Borg::Git.new()
-      source_control.update()
-      if (source_control.status)
-        start_test
-      else
-        send_object(BuildStatus.new(1))
-      end
+      source_control.update(self)
     end
     
     def redis
       Redis.new(:host => Borg::Config.redis_ip,:port => Borg::Config.redis_port)
+    end
+
+    def code_updated(last_status)
+      if(last_status.exit_status == 0)
+        start_test
+      else
+        puts "sending error report"
+        send_object(BuildStatus.new(1))
+      end
     end
 
     def start_test
@@ -84,11 +88,15 @@ module Borg
 
     def unbind
       puts "Sending the status thingy"
-      if(runner_type == 'unit')
+      case runner_type
+      when 'unit'
         worker.start_cucumber(BuildStatus.new(get_status.exitstatus))
+      when 'git'
+        worker.code_updated(BuildStatus.new(get_status.exitstatus))
       else
         worker.send_final_report(BuildStatus.new(get_status.exitstatus))
       end
     end
+
   end
 end

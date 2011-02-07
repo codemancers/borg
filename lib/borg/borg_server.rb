@@ -6,6 +6,7 @@ module Borg
 
     @@status_count = 0
     @@status_reports = []
+    attr_accessor :client_type
 
     def receive_object(ruby_object)
       case ruby_object
@@ -16,8 +17,10 @@ module Borg
         collect_status_response(ruby_object)
       when WorkerConnected
         @@workers[self.signature] = self
+        @client_type = :worker
       when BuildRequester
         @@requester[self.signature] = self
+        @client_type = :requestor
         check_for_workers && add_tests_to_redis && start_build
       end
     end
@@ -64,6 +67,10 @@ module Borg
     def unbind
       @@workers.delete(self.signature)
       @@requester.delete(self.signature)
+      if(client_type == :requestor)
+        @@status_count = 0
+        @@status_reports = []
+      end
     end
 
     def start_build
