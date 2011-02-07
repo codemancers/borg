@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    diff-lcs (1.1.2)
     eventmachine (0.12.10)
     git (1.2.5)
     jeweler (1.5.2)
@@ -9,6 +10,14 @@ GEM
       rake
     rake (0.8.7)
     redis (2.1.1)
+    rspec (2.5.0)
+      rspec-core (~> 2.5.0)
+      rspec-expectations (~> 2.5.0)
+      rspec-mocks (~> 2.5.0)
+    rspec-core (2.5.1)
+    rspec-expectations (2.5.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.5.0)
 
 PLATFORMS
   ruby
@@ -18,3 +27,4 @@ DEPENDENCIES
   eventmachine
   jeweler (~> 1.5.2)
   redis
+  rspec

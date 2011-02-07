@@ -134,6 +134,5 @@ module Borg
       raise "Error running #{key} tests" if (all_status.any? { |x| x != 0 })
 
     end #end of method remove_file_groups_from_redis
-    
   end
 end
