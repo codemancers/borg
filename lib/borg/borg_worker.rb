@@ -69,6 +69,7 @@ module Borg
       else
         send_object(BuildStatus.new(0))
       end
+      @@status_reports = []
     end
   end
 
