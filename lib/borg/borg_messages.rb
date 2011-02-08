@@ -1,8 +1,5 @@
 module Borg
-  class StartBuild;end
-
   class StartTest;end
-
   class StartCucumber; end
   
   BuildOutput = Struct.new(:data)
