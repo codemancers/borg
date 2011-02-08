@@ -6,7 +6,7 @@ module Borg
     def receive_object(ruby_object)
       case ruby_object
       when StartBuild
-        update_code
+        update_code(ruby_object)
       when StartTest
         start_test
       end
@@ -22,9 +22,9 @@ module Borg
       }
     end
 
-    def update_code
+    def update_code(build_request)
       source_control = Borg::Git.new()
-      source_control.update()
+      source_control.update(build_request.sha)
       if(source_control.status)
         start_test
       else

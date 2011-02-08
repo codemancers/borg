@@ -7,7 +7,8 @@ module Borg
 
     def connection_completed
       @server_running = true
-      send_object(BuildRequester.new())
+      current_ref = Git.new().local_branch_ref
+      send_object(BuildRequester.new(current_ref))
     end
 
     def receive_object(ruby_object)

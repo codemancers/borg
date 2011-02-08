@@ -21,7 +21,7 @@ module Borg
       when BuildRequester
         @@requester[self.signature] = self
         @client_type = :requestor
-        check_for_workers && add_tests_to_redis && start_build
+        check_for_workers && add_tests_to_redis && start_build(ruby_object)
       end
     end
 
@@ -73,10 +73,10 @@ module Borg
       end
     end
 
-    def start_build
+    def start_build(build_request)
       @@workers.each do |key,worker|
         @@status_count += 1
-        worker.send_object(StartBuild.new())
+        worker.send_object(StartBuild.new(build_request.sha))
       end
     end
 
