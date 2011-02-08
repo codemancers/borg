@@ -3,6 +3,8 @@ require "fileutils"
 module Borg
 
   class Git
+    include Borg::CLI
+
     attr_accessor :status
     def current_branch
       cmd_output = `git symbolic-ref HEAD`
@@ -22,15 +24,17 @@ module Borg
 
     def update(sha)
       if(local_branch_ref == sha)
-        @status = true
-      elsif(remote_branch_ref == local_branch_ref)
-        @status = true
+        @status = run_in_dir(Rails.root,
+                             "git submodule init && git submodule update && bundle install --local")
+      elsif(remote_branch_ref == sha)
+        @status = run_in_dir(Rails.root,
+                             "git reset --hard #{sha} && git submodule init && git submodule update && bundle install --local")
       else
-        FileUtils.cd(Rails.root) do
-          @status = system("git reset --hard HEAD && git fetch && git reset --hard #{sha} && git submodule init && git submodule update")
-        end
+        @status = run_in_dir(Rails.root,
+                             "git reset --hard HEAD && git fetch && git reset --hard #{sha} && git submodule init && git submodule update && bundle install --local")
       end
     end
+
 
   end
 end
