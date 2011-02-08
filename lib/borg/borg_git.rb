@@ -27,7 +27,7 @@ module Borg
         @status = true
       else
         FileUtils.cd(Rails.root) do
-          @status = system("git reset --hard HEAD && git fetch && git rebase origin/#{current_branch} && git submodule init && git submodule update")
+          @status = system("git reset --hard HEAD && git fetch && git reset --hard #{sha} && git submodule init && git submodule update")
         end
       end
     end
