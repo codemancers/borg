@@ -2,8 +2,11 @@ module Borg
   class TestUnit
     include AbstractAdapter
 
-    def run(n = 3)
+    def run(n = Borg::Config.test_unit_processes)
+      puts Borg::Config.test_unit_processes
       redirect_stdout()
+      puts n
+      
       load_environment('test')
       remove_file_groups_from_redis('tests',n) do |index,test_files|
         prepare_databse(index) unless try_migration_first(index)
