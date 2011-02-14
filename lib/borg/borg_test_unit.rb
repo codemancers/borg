@@ -2,7 +2,7 @@ module Borg
   class TestUnit
     include AbstractAdapter
 
-    def run(n = Borg::Config.test_unit_processes)
+    def run(n = 3)
       puts Borg::Config.test_unit_processes
       redirect_stdout()
       puts n

@@ -2,7 +2,7 @@ module Borg
   class CucumberRunner
     include AbstractAdapter
 
-    def run(n = Borg::Config.cucumber_processes)
+    def run(n = 1)
       puts Borg::Config.cucumber_processes
       redirect_stdout()
       load_environment('cucumber')

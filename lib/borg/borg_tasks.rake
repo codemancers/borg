@@ -38,13 +38,13 @@ namespace :borg do
   end
 
   desc "Run unit and functional test"
-  task :test do
-    Borg::TestUnit.new().run()
+  task :test => :environment do
+   Borg::TestUnit.new().run(Borg::Config.test_unit_processes)
   end
 
   desc "Run cucumber tests"
-  task :cucumber do
-    Borg::CucumberRunner.new().run()
+  task :cucumber => :environment do
+    Borg::CucumberRunner.new().run(Borg::Config.cucumber_processes)
   end
 
   
