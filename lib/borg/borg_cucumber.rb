@@ -3,10 +3,8 @@ module Borg
     include AbstractAdapter
 
     def run(n = 1)
-      puts Borg::Config.cucumber_processes
       redirect_stdout()
       load_environment('cucumber')
-      puts n;
       remove_file_groups_from_redis('cucumber',n) do |index,feature_files|
         prepare_databse(index) unless try_migration_first(index)
         full_feature_path = feature_files.split(',').map do |fl|
