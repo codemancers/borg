@@ -14,17 +14,16 @@ module Borg
       elsif(dead?)
         remove_pidfiles
       end
-      daemonize(block)
+      daemonize(&block)
     end
 
     def stop
       puts "Stopping #{process_name}"
       kill_process
-      remove_pidfiles
     end
 
     def pid_file
-      "#{Rails.root}/log/#{process_name.pid}"
+      "#{Rails.root}/log/#{process_name}.pid"
     end
 
     def pid
@@ -37,7 +36,7 @@ module Borg
         exit(0)
       else
         Process.setsid
-        op = File.open("#{Rails.root}/log/#{process_name}.pid", "w")
+        op = File.open(pid_file, "w")
         op.write(Process.pid().to_s)
         op.close
         redirect_io("#{Rails.root}/log/#{process_name}.log")
@@ -46,11 +45,11 @@ module Borg
       end
     end
 
-    def kill_process(pid_file)
+    def kill_process
       pgid =  Process.getpgid(pid)
       Process.kill('-TERM', pgid)
       File.delete(pid_file) if File.exists?(pid_file)
-      puts "Stopped Borg Tool with pid #{pid}"
+      puts "Stopped Borg #{process_name}"
     end
 
     def process_running?
@@ -77,10 +76,6 @@ module Borg
     end
 
     def pidfile_exists?; File.exists?(pid_file); end
-    
-    def remove_pidfiles
-      FileUtils.rm_r(Dir["#{Rails.root}/log/#{process_name}.pid"])
-    end
 
     def running?;status == 0;end
     # pidfile exists but process isn't running
