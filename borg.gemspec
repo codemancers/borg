@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{borg}
-  s.version = "0.0.14"
+  s.version = "0.0.17"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Hemant Kumar", "Karunakar"]
-  s.date = %q{2011-02-10}
+  s.date = %q{2011-02-16}
   s.description = %q{A distributed Test Suite runner for Rails, using Eventmachine and Redis}
   s.email = %q{hkumar@crri.co.in}
   s.extra_rdoc_files = [
