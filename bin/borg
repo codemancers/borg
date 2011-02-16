@@ -1,0 +1,16 @@
+require "rubygems"
+require "daemon_controller"
+
+
+controller = DaemonController.new(
+  :identifier    => 'Borg Server',
+  :start_command => 'rake borg:start_server',
+  :pid_file      => 'borg.pig',
+  :log_file      => 'borg.log',
+  :start_timeout => 25)
+
+if ARGV[0] == 'start'
+  controller.start()
+elsif ARGV[0] == 'stop'
+  controller.stop()
+end

@@ -24,17 +24,27 @@ namespace :borg do
 
   desc "Start server"
   task :start_server => :environment do
-    EM.run {
-      puts "Ip is #{Borg::Config.ip} and #{Borg::Config.port}"
-      EM.start_server(Borg::Config.ip,Borg::Config.port,Borg::Server)
-    }
+    begin
+      EM.run {
+        puts "Ip is #{Borg::Config.ip} and #{Borg::Config.port}"
+        EM.start_server(Borg::Config.ip,Borg::Config.port,Borg::Server)
+      }
+    rescue 
+      puts $!.message
+      puts $!.backtrace
+    end
   end
 
   desc "Start Client"
   task :start_client => :environment do
-    EM.run {
-      EM.connect(Borg::Config.ip,Borg::Config.port,Borg::Worker)
-    }
+    begin
+      EM.run {
+        EM.connect(Borg::Config.ip,Borg::Config.port,Borg::Worker)
+      }
+    rescue 
+      puts $!.message
+      puts $!.backtrace
+    end
   end
 
   desc "Run unit and functional test"
