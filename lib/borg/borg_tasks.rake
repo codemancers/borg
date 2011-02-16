@@ -24,27 +24,35 @@ namespace :borg do
 
   desc "Start server"
   task :start_server => :environment do
-    begin
+    borg_daemon = Borg::Daemon.new("borg_server")
+    borg_daemon.start do
       EM.run {
         puts "Ip is #{Borg::Config.ip} and #{Borg::Config.port}"
         EM.start_server(Borg::Config.ip,Borg::Config.port,Borg::Server)
       }
-    rescue 
-      puts $!.message
-      puts $!.backtrace
     end
   end
 
   desc "Start Client"
   task :start_client => :environment do
-    begin
+    borg_daemon = Borg::Daemon.new("borg_worker")
+    borg_daemon.start do
       EM.run {
         EM.connect(Borg::Config.ip,Borg::Config.port,Borg::Worker)
       }
-    rescue 
-      puts $!.message
-      puts $!.backtrace
     end
+  end
+
+  desc "Stop Client"
+  task :stop_client => :environment do
+    borg_daemon = Borg::Daemon.new("borg_worker")
+    borg_daemon.stop
+  end
+
+  desc "Stop Server"
+  task :stop_server => :environment do
+    borg_daemon = Borg::Daemon.new("borg_server")
+    borg_daemon.stop
   end
 
   desc "Run unit and functional test"
@@ -56,22 +64,4 @@ namespace :borg do
   task :cucumber => :environment do
     Borg::CucumberRunner.new().run(Borg::Config.cucumber_processes)
   end
-
-  
-#  desc "Run redis tests"
-#  task :redis_test, :count do |t,args|
-#    Borg.load_environment('test')
-#    size = args[:count] ? args[:count].to_i : 3
-#    puts "Running tests using #{size} processes"
-#    Borg.run_redis_test(size)
-#  end
-#
-#  desc "Run cucumber parallel test"
-#  task :cucumber, :count do |t,args|
-#    Borg.load_environment('cucumber')
-#    size = args[:count] ? args[:count].to_i : 3
-#    puts "Running Cucumber tests using #{size} processes"
-#    puts "Using the default profile..."
-#    Borg.run_cucumber(size)
-#  end
 end

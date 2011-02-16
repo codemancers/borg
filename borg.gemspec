@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
     "lib/borg/borg_abstract_adapter.rb",
     "lib/borg/borg_config.rb",
     "lib/borg/borg_cucumber.rb",
+    "lib/borg/borg_daemon.rb",
     "lib/borg/borg_git.rb",
     "lib/borg/borg_messages.rb",
     "lib/borg/borg_requestor.rb",
