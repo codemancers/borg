@@ -12,7 +12,7 @@ module Borg
         puts "Borg #{process_name} is already running"
         exit(0)
       elsif(dead?)
-        remove_pidfiles
+        File.delete(pid_file) if File.exists?(pid_file)
       end
       daemonize(&block)
     end

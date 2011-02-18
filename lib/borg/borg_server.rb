@@ -38,8 +38,8 @@ module Borg
 
     def add_tests_to_redis
       begin
-        TestUnit.new().add_to_redis(@@workers.size * 3)
-        CucumberRunner.new().add_to_redis(@@workers.size * 1)
+        TestUnit.new().add_to_redis(@@workers.size * Borg::Config.test_unit_processes)
+        CucumberRunner.new().add_to_redis(@@workers.size * Borg::Config.cucumber_processes)
         true
       rescue
         puts $!.message
