@@ -20,9 +20,10 @@ More details forthcoming..
 
 === 2. Installation procedure 
 
-Step 1 : Choose a machine where you want to run the borg server(for instance a Server with ip 172.18.0.7 in mycase).
+Step 1 : Choose a machine where you want to run the borg server(for instance a Server with IP 172.18.0.7 in mycase).
 
-Step 2 : We need a Redis server for this setup. So, install redis server and run the redis server on same machine( i.e IBM machine).
+Step 2 : We need a Redis server for this setup. So, install redis server and run the redis server on same machine( i.e same Server with IP 172.18.0.7).
+
   Please refer http://redis.io/ to install the redis 
  
 Step 3 : checkout your project with borg gem
@@ -51,13 +52,13 @@ For instance
 
 Step4 : Go to project folder and start the BORG server (i.e Server machine) as follows
 
-      rake borg:start_server --trace > ~/server_log/borg_server.log 2>&1 &   # Start server
+      rake borg:start_server   # Start server
 
 Step5 : Choose a Client machine and checkout project folder and run the Client
 
-      rake borg:start_client --trace > log/borg_client.log 2>&1 & 
+      rake borg:start_client 2>&1 & 
 
-	You can run the client on the same server
+	You can also run the client on the same server
 
 Step6: Run the task rake borg:build and we can also add this task to cruise config. So it will run for every new push.
 
