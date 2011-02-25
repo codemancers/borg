@@ -1,7 +1,7 @@
 require "cucumber/formatter/progress"
 
 module Borg
-  class Benchmark < Cucumber::Formatter::Progress
+  class CucumberBenchmark < Cucumber::Formatter::Progress
     include Borg::AbstractAdapter
 
     def before_feature(feature)
