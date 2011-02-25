@@ -5,19 +5,75 @@ Borg is a distributed test runner for running you unit/functionals tests, specs 
 It is written using EventMachine and Redis and has rather very simple design at its heart. 
 More details forthcoming..
 
+== Installation Guide
+      CONTENTS
+      1. Requirements
+      2. Installation procedure
 
-== Contributing to tickle
+== 1.Requirements 
+
+=== 1. We need Redis for this setup.
+
+  Redis is an open source, advanced key-value store.
+  It is often referred to as a data structure server since keys can contain strings,
+  hashes, lists, sets and sorted sets.
+
+=== 2. Installation procedure 
+
+Step 1 : Choose a machine where you want to run the borg server(for instance a Server with ip 172.18.0.7 in mycase).
+
+Step 2 : We need a Redis server for this setup. So, install redis server and run the redis server on same machine( i.e IBM machine).
+  Please refer http://redis.io/ to install the redis 
  
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
-* Fork the project
-* Start a feature/bugfix branch
-* Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+Step 3 : checkout your project with borg gem
 
-== Copyright
+Step 4 : Add a configuration file solaro/config/config.yml as per above server IP and push the code (server  IP is  : 172.18.0.7)
 
-Copyright (c) 2011 Hemant Kumar. See LICENSE.txt for
-further details.
+For instance
+  redis_ip: "172.18.0.7"
+  redis_port: 6379
+  build_server_ip: "172.18.0.7"
+  build_server_port: 10001
+  build_test_unit_processes: 3
+  build_cucumber_processes: 1
+  test_framework: "rake spec/ rake test"
+
+Step 5 : Add a a borg_config.rb in initializers.
+
+For instance
+  Borg::Config.ip = configatron.build_server_ip
+  Borg::Config.port = configatron.build_server_port
+  Borg::Config.redis_ip = configatron.redis_ip
+  Borg::Config.redis_port = configatron.redis_port
+  Borg::Config.test_unit_processes = configatron.build_test_unit_processes
+  Borg::Config.cucumber_processes = configatron.build_cucumber_processes
+  Borg::Config.test_framework = configatron.test_framework
+
+Step4 : Go to project folder and start the BORG server (i.e Server machine) as follows
+
+      rake borg:start_server --trace > ~/server_log/borg_server.log 2>&1 &   # Start server
+
+Step5 : Choose a Client machine and checkout project folder and run the Client
+
+      rake borg:start_client --trace > log/borg_client.log 2>&1 & 
+
+	You can run the client on the same server
+
+Step6: Run the task rake borg:build and we can also add this task to cruise config. So it will run for every new push.
+
+That's it!.
+
+=== Contributing to tickle
+  
+ * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
+ * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
+ * Fork the project
+ * Start a feature/bugfix branch
+ * Commit and push until you are happy with your contribution
+ * Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
+ * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+           
+=== Copyright
+
+ Copyright (c) 2011 Hemant Kumar. See LICENSE.txt for further details.
 
