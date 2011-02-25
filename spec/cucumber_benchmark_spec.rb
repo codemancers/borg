@@ -15,4 +15,8 @@ describe Borg::CucumberBenchmark, "cucumber benchmark" do
     failure = Cucumber::Cli::Main.execute(@args)
     redis[@feature_filename].should_not be_nil
   end
+
+  after do
+    redis.del(@feature_filename)
+  end
 end
