@@ -53,9 +53,10 @@ module Borg
       @@status_reports << ruby_object
       @@status_count -= 1
       puts "Status count is #{@@status_count}"
-      if(@@status_count == 0)
+      if(@@status_count <= 0)
         error_status = @@status_reports.any? {|x| x.exit_status != 0 }
         @@status_reports = []
+        @@status_count = 0
         if(error_status)
           send_to_requester(BuildStatus.new(1))
         else

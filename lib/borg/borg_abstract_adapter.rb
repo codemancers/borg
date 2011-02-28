@@ -3,6 +3,7 @@ module Borg
     def load_environment(env_name)
       puts "Loading Rails.."
       ENV["RAILS_ENV"] = env_name
+      puts "Setting rails environment to #{env_name}"
       Rails.env = env_name
       require(File.join(Rails.root, 'config', 'environment'))
       $: << "#{Rails.root}/test"
@@ -58,6 +59,9 @@ module Borg
         ActiveRecord::Base.establish_connection(db_config)
         ActiveRecord::Base.connection()
         migrate_db()
+        require 'database_cleaner'
+        DatabaseCleaner.strategy = :truncation
+        DatabaseCleaner.clean
         return true
       rescue Exception => e
         puts e.message
@@ -118,6 +122,7 @@ module Borg
         local_pids = []
         process_count.times do |index|
           test_files = @redis_connection.rpop(key)
+          puts "Removed test files #{test_files}"
           if(test_files)
             local_pids << Process.fork { block.call(index,test_files) }
           else

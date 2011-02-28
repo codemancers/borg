@@ -5,6 +5,7 @@ source "http://rubygems.org"
 
 gem 'eventmachine'
 gem 'redis'
+gem 'database_cleaner'
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

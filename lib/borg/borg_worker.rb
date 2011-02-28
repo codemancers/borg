@@ -85,9 +85,17 @@ module Borg
     def unbind
       puts "Sending the status thingy"
       if(runner_type == 'unit')
-        worker.start_cucumber(BuildStatus.new(get_status.exitstatus))
+        worker.start_cucumber(BuildStatus.new(exit_status))
       else
-        worker.send_final_report(BuildStatus.new(get_status.exitstatus))
+        worker.send_final_report(BuildStatus.new(exit_status))
+      end
+    end
+
+    def exit_status
+      if(get_status.exitstatus)
+        get_status.exitstatus
+      else
+        1
       end
     end
 

@@ -39,7 +39,9 @@ module Borg
         op = File.open(pid_file, "w")
         op.write(Process.pid().to_s)
         op.close
-        redirect_io("#{Rails.root}/log/#{process_name}.log")
+        log_file = ENV['borg_log'] || "#{Rails.root}/log/#{process_name}.log"
+        puts "Logfile is #{log_file}"
+        redirect_io(log_file)
         $0 = process_name
         block.call()
       end
