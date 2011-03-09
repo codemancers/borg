@@ -18,6 +18,9 @@ require File.join(File.dirname(__FILE__),'borg_worker')
 
 module Borg
   class Railtie < Rails::Railtie
+    config.after_initialize do
+      Borg::Config.load_config("#{Rails.root}/config/borg_config.yml")
+    end
     rake_tasks do
       load File.join(File.dirname(__FILE__),'borg_tasks.rake')
     end
