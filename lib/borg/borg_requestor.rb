@@ -14,8 +14,8 @@ module Borg
     end
 
     def check_for_inactivity
-      time_diff = (Time.now - @updated_at)/60
-      if(time_diff > 200)
+      time_diff = Time.now - @updated_at
+      if(time_diff > Borg::Config.inactivity_timeout)
         puts "No response received from the server for a period of #{time_diff} seconds"
         abort("Error running tests")
       end
