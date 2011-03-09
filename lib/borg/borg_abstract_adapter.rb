@@ -122,7 +122,6 @@ module Borg
         local_pids = []
         process_count.times do |index|
           test_files = @redis_connection.rpop(key)
-          puts "Removed test files #{test_files}"
           if(test_files)
             local_pids << Process.fork { block.call(index,test_files) }
           else
