@@ -12,3 +12,7 @@ Then /^I should get food$/ do
   print '.'
   sleep 0.1
 end
+
+And /^I sleep for (\d+) seconds$/ do |time|
+  sleep(time.to_i)
+end

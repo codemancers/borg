@@ -1,7 +1,7 @@
 module Borg
   class CucumberRunner
     include AbstractAdapter
-
+    attr_accessor :file_splits
     def run(n = 1)
       redirect_stdout()
       load_environment('cucumber')
@@ -26,10 +26,10 @@ module Borg
         filename = fl.gsub(/#{Rails.root}/,'')
         file_splitter.history << RunHistory.new(filename,feature_running_time(filename))
       end
-      feature_files = file_splitter.split().map do |files|
+      @file_splits = file_splitter.split()
+      feature_files = file_splits.map do |files|
         files.map(&:filename)
       end
-      puts "Feature files is #{feature_files}"
       add_files_to_redis(feature_files,'cucumber')
     end
   end

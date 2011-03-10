@@ -13,9 +13,11 @@ describe Borg::CucumberRunner do
       @args = %w(--format Borg::CucumberBenchmark) + @features
       @cuke_runner = Borg::CucumberRunner.new()
     end
+    
     it "should split the files based on historic running times" do
       failure = Cucumber::Cli::Main.execute(@args)
-      puts Rails.root
+      @cuke_runner.add_to_redis(4)
+      @cuke_runner.file_splits.size.should == 4
     end
   end
 end

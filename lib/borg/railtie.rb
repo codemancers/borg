@@ -2,6 +2,7 @@ require 'rails'
 require "eventmachine"
 require "redis"
 require File.join(File.dirname(__FILE__),'cli')
+require File.join(File.dirname(__FILE__),'file_splitter')
 require File.join(File.dirname(__FILE__),'borg_abstract_adapter')
 require File.join(File.dirname(__FILE__),'borg_daemon')
 require File.join(File.dirname(__FILE__),'borg_config')
