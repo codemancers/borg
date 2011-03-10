@@ -10,8 +10,9 @@ module Borg
 
     def after_feature(feature)
       time_taken = Time.now - @start_time
-      puts "Feature #{feature.file} took #{time_taken} seconds to run"
-      redis[feature.file] = time_taken
+      filename = feature.file.gsub(/#{Rails.root}/,'')
+      puts "Feature #{filename} took #{time_taken} seconds to run"
+      redis[filename] = time_taken
     end
   end
 end
