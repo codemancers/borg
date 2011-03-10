@@ -1,20 +1,14 @@
 require "rubygems"
 $:<< File.join(File.dirname(__FILE__),"..","lib")
-
-
 require "borg"
+
 module Rails
   def self.root
     File.join(File.dirname(__FILE__),"sample_app")
   end
 end
 
-require "borg/borg_config"
-
-Borg::Config.redis_ip = "localhost"
-Borg::Config.redis_port = 6379
-
-
+Borg::Config.load_config(File.join(Rails.root, "config/borg.yml"))
 
 module Helpers
   def redis

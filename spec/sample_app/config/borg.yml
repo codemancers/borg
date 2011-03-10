@@ -1,0 +1,10 @@
+redis_ip: localhost
+redis_port: 6379
+ip: localhost
+port: 10001
+build_test_unit_processes: 2
+build_cucumber_processes: 3
+inactivity_timeout: 200
+
+
+
