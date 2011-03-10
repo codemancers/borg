@@ -1,6 +1,5 @@
 require "spec_helper"
 require "cucumber"
-require "borg/cucumber_benchmark"
 require "borg/borg_cucumber"
 
 describe Borg::CucumberRunner do
