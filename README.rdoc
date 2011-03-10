@@ -50,7 +50,7 @@ For instance
   Borg::Config.cucumber_processes = configatron.build_cucumber_processes
   Borg::Config.test_framework = configatron.test_framework
 
-Step4 : Go to project folder and start the BORG server (i.e Server machine) as follows
+Step4 : Go to project folder and start the Borg server (i.e Server machine) as follows
 
       rake borg:start_server   # Start server
 
@@ -64,7 +64,7 @@ Step6: Run the task rake borg:build and we can also add this task to cruise conf
 
 That's it!.
 
-=== Contributing to tickle
+=== Contributing to Borg
   
  * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
  * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
@@ -76,5 +76,5 @@ That's it!.
            
 === Copyright
 
- Copyright (c) 2011 Hemant Kumar. See LICENSE.txt for further details.
+ Copyright (c) 2011 Hemant Kumar & Karunakar. See LICENSE.txt for further details.
 
