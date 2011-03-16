@@ -44,9 +44,10 @@ describe Borg::Server do
 
       build_requestor = Borg::BuildRequester.new("baz")      
       
+      @borg_server.should_receive(:add_tests_to_redis).and_return(true)
+      borg_worker.should_receive(:send_object).any_number_of_times
+
       @borg_server.receive_object(build_requestor)
     end
-
-    it "should signal all the workers to start build"
   end
 end
