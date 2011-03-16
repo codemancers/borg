@@ -1,11 +1,14 @@
 module Borg
   class Server < EM::Connection
     include EM::P::ObjectProtocol
-    @@workers = {}
-    @@requester = {}
+    cattr_accessor :workers, :requestors, :status_count, :status_reports
 
-    @@status_count = 0
-    @@status_reports = []
+    self.workers = {}
+    self.requestors = {}
+
+    self.status_count = 0
+    self.status_reports = []
+    
     attr_accessor :client_type
 
     def receive_object(ruby_object)
@@ -16,17 +19,18 @@ module Borg
         puts "Received object #{ruby_object.inspect}"
         collect_status_response(ruby_object)
       when WorkerConnected
-        @@workers[self.signature] = self
+        self.workers[self.signature] = self
         @client_type = :worker
       when BuildRequester
-        @@requester[self.signature] = self
+        puts "Got a build request here with data #{ruby_object.inspect}"
+        self.requestors[self.signature] = self
         @client_type = :requestor
         check_for_workers && add_tests_to_redis && start_build(ruby_object)
       end
     end
 
     def check_for_workers
-      return true unless @@workers.empty?
+      return true unless workers.empty?
       send_error_to_requester("No worker found running")
       false
     end
@@ -38,8 +42,8 @@ module Borg
 
     def add_tests_to_redis
       begin
-        TestUnit.new().add_to_redis(@@workers.size * Borg::Config.test_unit_processes)
-        CucumberRunner.new().add_to_redis(@@workers.size * Borg::Config.cucumber_processes)
+        TestUnit.new().add_to_redis(workers.size * Borg::Config.test_unit_processes)
+        CucumberRunner.new().add_to_redis(workers.size * Borg::Config.cucumber_processes)
         true
       rescue
         puts $!.message
@@ -50,13 +54,13 @@ module Borg
     end
 
     def collect_status_response(ruby_object)
-      @@status_reports << ruby_object
-      @@status_count -= 1
-      puts "Status count is #{@@status_count}"
-      if(@@status_count <= 0)
-        error_status = @@status_reports.any? {|x| x.exit_status != 0 }
-        @@status_reports = []
-        @@status_count = 0
+      status_reports << ruby_object
+      status_count -= 1
+      puts "Status count is #{status_count}"
+      if(status_count <= 0)
+        error_status = status_reports.any? {|x| x.exit_status != 0 }
+        status_reports = []
+        status_count = 0
         if(error_status)
           send_to_requester(BuildStatus.new(1))
         else
@@ -66,23 +70,23 @@ module Borg
     end
 
     def unbind
-      @@workers.delete(self.signature)
-      @@requester.delete(self.signature)
+      workers.delete(self.signature)
+      requestors.delete(self.signature)
       if(client_type == :requestor)
-        @@status_count = 0
-        @@status_reports = []
+        self.status_count = 0
+        status_reports = []
       end
     end
 
     def start_build(build_request)
-      @@workers.each do |key,worker|
-        @@status_count += 1
+      workers.each do |key,worker|
+        self.status_count += 1
         worker.send_object(StartBuild.new(build_request.sha))
       end
     end
 
     def send_to_requester(ruby_object)
-      @@requester.each do |key,requester|
+      requestors.each do |key,requester|
         requester.send_object(ruby_object)
       end
     end
