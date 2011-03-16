@@ -18,7 +18,6 @@ describe Borg::Server do
     end
   end
   
-  
   describe "Server's interaction with build requestor" do
     before(:all) do
       @borg_server = Borg::Server.new("foo")
@@ -48,6 +47,14 @@ describe Borg::Server do
       borg_worker.should_receive(:send_object).any_number_of_times
 
       @borg_server.receive_object(build_requestor)
+      Borg::Server.status_count.should == 1
+    end
+
+    it "should remove requestor when disconnected" do
+      @borg_server.unbind
+
+      Borg::Server.requestors.should be_empty
+      Borg::Server.status_count.should == 0
     end
   end
 end
