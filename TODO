@@ -1,5 +1,5 @@
 Features to implement
-1. Ensure that same SHA is checked out everywhere.
 2. Two builds of the same project, should not be running parallely.
 3. Number of processes in a worker, should be decided dynamically.
 4. Track build times and ensure that failed builds run first.
+5. Use require_relative rather than using require for loading files from relative directories.
