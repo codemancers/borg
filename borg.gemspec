@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{borg}
-  s.version = "0.0.26"
+  s.version = "0.0.27"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Hemant Kumar", "Karunakar"]
-  s.date = %q{2011-03-10}
+  s.date = %q{2011-03-17}
   s.default_executable = %q{borg}
   s.description = %q{A distributed Test Suite runner for Rails, using Eventmachine and Redis}
   s.email = %q{hkumar@crri.co.in}
@@ -47,8 +47,10 @@ Gem::Specification.new do |s|
     "lib/borg/file_splitter.rb",
     "lib/borg/railtie.rb",
     "lib/borg/test_unit_benchmark.rb",
+    "spec/borg_config_spec.rb",
     "spec/borg_cucumber_spec.rb",
     "spec/borg_requestor_spec.rb",
+    "spec/borg_server_spec.rb",
     "spec/cucumber_benchmark_spec.rb",
     "spec/features/foo.feature",
     "spec/features/step_definitions/foo_steps.rb",
@@ -62,6 +64,7 @@ Gem::Specification.new do |s|
     "spec/sample_app/config.ru",
     "spec/sample_app/config/application.rb",
     "spec/sample_app/config/boot.rb",
+    "spec/sample_app/config/borg.yml",
     "spec/sample_app/config/database.yml",
     "spec/sample_app/config/environment.rb",
     "spec/sample_app/config/environments/cucumber.rb",
@@ -116,8 +119,10 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.5.2}
   s.summary = %q{A distributed Test Suite runner for Rails, using Eventmachine and Redis}
   s.test_files = [
+    "spec/borg_config_spec.rb",
     "spec/borg_cucumber_spec.rb",
     "spec/borg_requestor_spec.rb",
+    "spec/borg_server_spec.rb",
     "spec/cucumber_benchmark_spec.rb",
     "spec/features/step_definitions/foo_steps.rb",
     "spec/sample_app/app/controllers/application_controller.rb",
