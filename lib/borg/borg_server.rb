@@ -8,6 +8,14 @@ module Borg
 
     self.status_count = 0
     self.status_reports = []
+
+    def self.worker_ips
+      self.workers.values.map do |worker|
+        worker.remote_ip
+      end.join(",")
+    rescue
+      'Unable to get worker ips'
+    end
     
     attr_accessor :client_type
 
@@ -42,6 +50,7 @@ module Borg
 
     def add_tests_to_redis
       begin
+        puts "Total number of workers are #{workers.size} and their ips are #{Borg::Server.worker_ips}"
         TestUnit.new().add_to_redis(workers.size * Borg::Config.test_unit_processes)
         CucumberRunner.new().add_to_redis(workers.size * Borg::Config.cucumber_processes)
         true
@@ -56,7 +65,7 @@ module Borg
     def collect_status_response(ruby_object)
       self.status_reports << ruby_object
       self.status_count -= 1
-      puts "Status count is #{self.status_count}"
+      puts "Status count is #{self.status_count} and received from worker #{remote_ip} with status #{ruby_object.exit_status}"
       if(status_count <= 0)
         error_status = status_reports.any? {|x| x.exit_status != 0 }
         self.status_reports = []
@@ -89,6 +98,13 @@ module Borg
       requestors.each do |key,requester|
         requester.send_object(ruby_object)
       end
+    end
+
+    def remote_ip
+      port, ip = Socket.unpack_sockaddr_in(get_peername)
+      ip
+    rescue
+      'unable to get ip'
     end
   end
 end

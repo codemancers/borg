@@ -46,15 +46,7 @@ module Borg
     end
 
     def can_add?(x, subarray)
-      if (sum(subarray) < @subarray_sum)
-        true
-      else
-        if (all_subarrays_full?)
-          true
-        else
-          false
-        end
-      end
+      (sum(subarray) < @subarray_sum) || all_subarrays_full?
     end
 
     def all_subarrays_full?

@@ -17,7 +17,7 @@ module Borg
       time_diff = Time.now - @updated_at
       if(time_diff > Borg::Config.inactivity_timeout)
         puts "No response received from the server for a period of #{time_diff} seconds"
-        abort("Error running tests")
+        abort("Error running tests because no response received from the server for #{time_diff} seconds")
       end
     end
 
