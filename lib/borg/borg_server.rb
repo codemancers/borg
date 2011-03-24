@@ -9,14 +9,37 @@ module Borg
     self.status_count = 0
     self.status_reports = []
 
-    def self.worker_ips
-      self.workers.values.map do |worker|
-        worker.remote_ip
-      end.join(",")
-    rescue
-      'Unable to get worker ips'
+    class << self
+      def worker_ips
+        self.workers.values.map do |worker_data|
+          worker_data.worker.remote_ip
+        end.join(",")
+      rescue
+        'Unable to get worker ips'
+      end
+
+      def test_unit_processes
+        self.workers.values.inject(0) do |sum,worker_data|
+          sum += worker_data.worker_options[:test_unit_processes]
+          sum
+        end
+      end
+
+      def cucumber_processes
+        self.workers.values.inject(0) do |sum,worker_data|
+          sum += worker_data.worker_options[:cucumber_processes]
+          sum
+        end
+      end
+
+      def rspec_processes
+        self.workers.values.inject(0) do |sum,worker_data|
+          sum += worker_data.worker_options[:rspec_processes]
+          sum
+        end
+      end
     end
-    
+
     attr_accessor :client_type
 
     def receive_object(ruby_object)
@@ -27,7 +50,7 @@ module Borg
         puts "Received object #{ruby_object.inspect}"
         collect_status_response(ruby_object)
       when WorkerConnected
-        self.workers[self.signature] = self
+        self.workers[self.signature] = Borg::WorkerData.new(self,ruby_object.options)
         @client_type = :worker
       when BuildRequester
         puts "Got a build request here with data #{ruby_object.inspect}"
@@ -51,8 +74,8 @@ module Borg
     def add_tests_to_redis
       begin
         puts "Total number of workers are #{workers.size} and their ips are #{Borg::Server.worker_ips}"
-        TestUnit.new().add_to_redis(workers.size * Borg::Config.test_unit_processes)
-        CucumberRunner.new().add_to_redis(workers.size * Borg::Config.cucumber_processes)
+        TestUnit.new().add_to_redis(Server.test_unit_processes)
+        CucumberRunner.new().add_to_redis(Server.cucumber_processes)
         true
       rescue
         puts $!.message
@@ -88,9 +111,9 @@ module Borg
     end
 
     def start_build(build_request)
-      workers.each do |key,worker|
+      workers.each do |key,worker_data|
         self.status_count += 1
-        worker.send_object(StartBuild.new(build_request.sha))
+        worker_data.worker.send_object(StartBuild.new(build_request.sha))
       end
     end
 

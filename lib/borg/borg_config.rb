@@ -2,6 +2,7 @@ module Borg
   class Config
     class << self
       def load_config(config_file)
+        puts "Calling load config with file #{config_file}"
         @@borg_config = YAML.load(File.open(config_file))
       end
       def method_missing(*args,&block)

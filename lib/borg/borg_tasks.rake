@@ -15,8 +15,6 @@ namespace :borg do
   
   desc "Request server to run test"
   task :build => :environment do
-    # Borg::TestUnit.new().add_to_redis
-    # Borg::CucumberRunner.new().add_to_redis
     EM.run {
       Borg::Requestor.make_request
     }

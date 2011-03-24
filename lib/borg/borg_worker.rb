@@ -13,7 +13,11 @@ module Borg
     end
 
     def connection_completed
-      send_object(WorkerConnected.new(self.signature))
+      send_object(WorkerConnected.new(self.signature,
+        :test_unit_processes => Borg::Config.test_unit_processes,
+        :cucumber_processes  => Borg::Config.cucumber_processes,
+        :rspec_processes     => Borg::Config.rspec_processes
+      ))
     end
 
     def unbind
