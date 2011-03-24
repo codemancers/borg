@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{borg}
-  s.version = "0.0.28"
+  s.version = "0.0.29"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Hemant Kumar", "Karunakar"]
-  s.date = %q{2011-03-22}
+  s.date = %q{2011-03-24}
   s.default_executable = %q{borg}
   s.description = %q{A distributed Test Suite runner for Rails, using Eventmachine and Redis}
   s.email = %q{hkumar@crri.co.in}
@@ -49,8 +49,10 @@ Gem::Specification.new do |s|
     "lib/borg/test_unit_benchmark.rb",
     "spec/borg_config_spec.rb",
     "spec/borg_cucumber_spec.rb",
+    "spec/borg_messages_spec.rb",
     "spec/borg_requestor_spec.rb",
     "spec/borg_server_spec.rb",
+    "spec/borg_worker_spec.rb",
     "spec/cucumber_benchmark_spec.rb",
     "spec/features/foo.feature",
     "spec/features/step_definitions/foo_steps.rb",
@@ -109,20 +111,21 @@ Gem::Specification.new do |s|
     "spec/sample_app/test/test_helper.rb",
     "spec/spec_helper.rb",
     "spec/split_files_spec.rb",
-    "spec/test_unit_benchmark_spec.rb",
     "spec/tests/bar_test.rb",
     "spec/tests/foo_test.rb"
   ]
   s.homepage = %q{http://github.com/gnufied/borg}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.5.2}
+  s.rubygems_version = %q{1.6.2}
   s.summary = %q{A distributed Test Suite runner for Rails, using Eventmachine and Redis}
   s.test_files = [
     "spec/borg_config_spec.rb",
     "spec/borg_cucumber_spec.rb",
+    "spec/borg_messages_spec.rb",
     "spec/borg_requestor_spec.rb",
     "spec/borg_server_spec.rb",
+    "spec/borg_worker_spec.rb",
     "spec/cucumber_benchmark_spec.rb",
     "spec/features/step_definitions/foo_steps.rb",
     "spec/sample_app/app/controllers/application_controller.rb",
@@ -146,7 +149,6 @@ Gem::Specification.new do |s|
     "spec/sample_app/test/test_helper.rb",
     "spec/spec_helper.rb",
     "spec/split_files_spec.rb",
-    "spec/test_unit_benchmark_spec.rb",
     "spec/tests/bar_test.rb",
     "spec/tests/foo_test.rb"
   ]
