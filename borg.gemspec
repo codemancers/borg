@@ -10,10 +10,8 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Hemant Kumar", "Karunakar"]
   s.date = %q{2011-03-24}
-  s.default_executable = %q{borg}
   s.description = %q{A distributed Test Suite runner for Rails, using Eventmachine and Redis}
   s.email = %q{hkumar@crri.co.in}
-  s.executables = ["borg"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc",
@@ -28,7 +26,6 @@ Gem::Specification.new do |s|
     "Rakefile",
     "TODO",
     "VERSION",
-    "bin/borg",
     "borg.gemspec",
     "lib/borg.rb",
     "lib/borg/borg_abstract_adapter.rb",
