@@ -1,5 +1,9 @@
 Features to implement
-2. Two builds of the same project, should not be running parallely.
-3. Number of processes in a worker, should be decided dynamically.
+1. Remove migration dependency which is very specific to Solaro.
+2. Add RSpec support
+3. Two builds of the same project, should not be running parallely.
 4. Track build times and ensure that failed builds run first.
 5. Use require_relative rather than using require for loading files from relative directories.
+6. Find out a way to determine run time of machines and distribute tests accordingly.
+
+
