@@ -4,7 +4,7 @@ ip: localhost
 port: 10001
 test_unit_processes: 2
 cucumber_processes: 2
-inactivity_timeout: 200
+inactivity_timeout: 5
 
 
 

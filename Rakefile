@@ -23,9 +23,7 @@ end
 Jeweler::RubygemsDotOrgTasks.new
 
 require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new do |t|
-#  t.spec_files = FileList['spec/**/*_spec.rb']
-end
+RSpec::Core::RakeTask.new
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
