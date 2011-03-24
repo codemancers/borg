@@ -65,6 +65,8 @@ module Borg
     def add_tests_to_redis
       begin
         puts "Total number of workers are #{workers.size} and their ips are #{Borg::Server.worker_ips}"
+        puts "Splitting unit tests in #{Server.test_unit_processes}"
+        puts "Splitting cucumber tests in #{Server.cucumber_processes}"
         TestUnit.new().add_to_redis(Server.test_unit_processes)
         CucumberRunner.new().add_to_redis(Server.cucumber_processes)
         true
