@@ -8,6 +8,7 @@ module Borg
 
     self.status_count = 0
     self.status_reports = []
+    def self.metaclass; class << self; self; end; end
 
     class << self
       def worker_ips
@@ -17,27 +18,17 @@ module Borg
       rescue
         'Unable to get worker ips'
       end
+    end
 
-      def test_unit_processes
-        self.workers.values.inject(0) do |sum,worker_data|
-          sum += worker_data.worker_options[:test_unit_processes]
-          sum
+    [:test_unit_processes,:cucumber_processes,:rspec_processes].each do |method_name|
+      class_eval(<<-RUBY, __FILE__, __LINE__ + 1)
+        def self.#{method_name}
+          workers.values.inject(0) do |sum,worker_data|
+            sum += worker_data.worker_options['#{method_name}'.to_sym]
+            sum
+          end
         end
-      end
-
-      def cucumber_processes
-        self.workers.values.inject(0) do |sum,worker_data|
-          sum += worker_data.worker_options[:cucumber_processes]
-          sum
-        end
-      end
-
-      def rspec_processes
-        self.workers.values.inject(0) do |sum,worker_data|
-          sum += worker_data.worker_options[:rspec_processes]
-          sum
-        end
-      end
+      RUBY
     end
 
     attr_accessor :client_type
