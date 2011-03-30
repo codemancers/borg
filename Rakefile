@@ -17,7 +17,7 @@ Jeweler::Tasks.new do |gem|
   gem.summary = %Q{A distributed Test Suite runner for Rails, using Eventmachine and Redis}
   gem.description = %Q{A distributed Test Suite runner for Rails, using Eventmachine and Redis}
   gem.email = "hkumar@crri.co.in"
-  gem.authors = ["Hemant Kumar", "Karunakar"]
+  gem.authors = ["CastleRock"]
 end
 
 Jeweler::RubygemsDotOrgTasks.new
