@@ -6,6 +6,7 @@ module Borg
     include Borg::CLI
 
     attr_accessor :status
+
     def current_branch
       cmd_output = `git symbolic-ref HEAD`
       branch_name = cmd_output.strip.split("/")[-1]
@@ -23,12 +24,12 @@ module Borg
     end
 
     def update(sha)
-      if(local_branch_ref == sha)
+      if (local_branch_ref == sha)
         @status = run_in_dir(Rails.root,
-                             "git submodule init && git submodule update && bundle install --local")
-      elsif(remote_branch_ref == sha)
+                             "#{run_post_reset_hook} && git submodule init && git submodule update && bundle install --local")
+      elsif (remote_branch_ref == sha)
         @status = run_in_dir(Rails.root,
-                             "git reset --hard #{sha} && git submodule init && git submodule update && bundle install --local")
+                             "git reset --hard #{sha} && #{run_post_reset_hook} && git submodule init && git submodule update && bundle install --local")
       else
         @status = run_in_dir(Rails.root,
                              "git reset --hard HEAD && git fetch && git reset --hard #{sha} && #{run_post_reset_hook} && git submodule init && git submodule update && bundle install --local")
@@ -36,7 +37,7 @@ module Borg
     end
 
     def run_post_reset_hook
-      borg_hook_location = File.join(Rails.root,"borg_post_reset")
+      borg_hook_location = File.join(Rails.root, "borg_post_reset")
       if File.exist?(borg_hook_location)
         "chmod +x #{borg_hook_location} && #{borg_hook_location}"
       else
