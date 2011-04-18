@@ -2,14 +2,13 @@
 namespace :borg do
   [:unit, :functional].each do |t|
     type = t.to_s.sub(/s$/, '')
+    task_name = type + "_local"
 
-    desc "Run #{type} tests"
-    task t, :count do |t, args|
-      Borg.load_environment
+    desc "Run #{type} tests locally"
+    task task_name.to_sym, :count do |t, args|
       size = args[:count] ? args[:count].to_i : 3
-      #Borg.prepare_all_databases(size)
       puts "Running #{type} tests using #{size} processes"
-      Borg.run_tests type, size
+      Borg::TestUnit.new().run_tests_locally(type, size)
     end
   end
   
