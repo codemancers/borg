@@ -2,8 +2,7 @@ module Borg
   class TestUnit
     include AbstractAdapter
 
-    def run(n = 0)
-      return 0 if n == 0
+    def run(n = 3)
       redirect_stdout()
       load_environment('test')
       remove_file_groups_from_redis('tests', n) do |index, test_files|
@@ -15,7 +14,6 @@ module Borg
     end
 
     def add_to_redis(worker_count)
-      return 0 if worker_count == 0
       test_files = (Dir["#{Rails.root}/test/unit/**/**_test.rb"] + Dir["#{Rails.root}/test/functional/**/**_test.rb"]).map do |fl|
         fl.gsub(/#{Rails.root}/, '')
       end.sort.in_groups(worker_count, false)
