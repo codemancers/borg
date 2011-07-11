@@ -6,9 +6,8 @@ It is written using EventMachine and Redis and has rather very simple design at 
 More details forthcoming..
 
 == Installation Guide
-      CONTENTS
-      1. Requirements
-      2. Installation procedure
+  1. Requirements
+  2. Installation procedure
 
 == 1.Requirements 
 
@@ -28,7 +27,7 @@ Step 2 : We need a Redis server for this setup. So, install redis server and run
  
 Step 3 : checkout your project with borg gem
 
-Step 4 : Add a configuration file solaro/config/config.yml as per above server IP and push the code (server  IP is  : 172.18.0.7)
+Step 4 : Add a configuration file <rails_project>/config/borg.yml as per above server IP and push the code (server  IP is  : 172.18.0.7)
 
 For instance
   redis_ip: "172.18.0.7"
@@ -37,30 +36,18 @@ For instance
   build_server_port: 10001
   build_test_unit_processes: 3
   build_cucumber_processes: 1
-  test_framework: "rake spec/ rake test"
 
-Step 5 : Add a a borg_config.rb in initializers.
-
-For instance
-  Borg::Config.ip = configatron.build_server_ip
-  Borg::Config.port = configatron.build_server_port
-  Borg::Config.redis_ip = configatron.redis_ip
-  Borg::Config.redis_port = configatron.redis_port
-  Borg::Config.test_unit_processes = configatron.build_test_unit_processes
-  Borg::Config.cucumber_processes = configatron.build_cucumber_processes
-  Borg::Config.test_framework = configatron.test_framework
-
-Step4 : Go to project folder and start the Borg server (i.e Server machine) as follows
+Step 5 : Go to project folder and start the Borg server (i.e Server machine) as follows
 
       rake borg:start_server   # Start server
 
-Step5 : Choose a Client machine and checkout project folder and run the Client
+Step 6 : Choose a Client machine and checkout project folder and run the Client
 
-      rake borg:start_client 2>&1 & 
+      rake borg:start_client 
 
 	You can also run the client on the same server
 
-Step6: Run the task rake borg:build and we can also add this task to cruise config. So it will run for every new push.
+Step 7: Run the task rake borg:build and we can also add this task to cruise config. So it will run for every new push.
 
 That's it!.
 
