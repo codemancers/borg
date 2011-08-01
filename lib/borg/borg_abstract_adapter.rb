@@ -53,56 +53,6 @@ module Borg
       STDERR.sync = true
     end
 
-    def try_migration_first(db_counter)
-      begin
-        db_config = get_connection_config(db_counter)
-        ActiveRecord::Base.establish_connection(db_config)
-        ActiveRecord::Base.connection()
-        migrate_db()
-        require 'database_cleaner'
-        DatabaseCleaner.strategy = :truncation
-        DatabaseCleaner.clean
-        return true
-      rescue Exception => e
-        puts e.message
-        return false
-      rescue StandardError
-        puts $!.message
-        return false
-      rescue Mysql2::Error
-        puts $!.message
-        return false
-      end
-    end
-
-    def prepare_databse(db_counter)
-      create_db_using_raw_sql(db_counter)
-      try_migration_first(db_counter)
-    end
-
-    def create_db_using_raw_sql(db_counter)
-      test_config = config['test']
-      sql_connection = Mysql2::Client.new(test_config.symbolize_keys)
-      db_config = get_connection_config(db_counter)
-      sql_connection.query("DROP DATABASE IF EXISTS #{db_config['database']}")
-      sql_connection.query("CREATE DATABASE #{db_config['database']}")
-      sql_connection.close()
-    end
-
-    def migrate_db
-      ENV["VERBOSE"] = "true"
-      Rake::Task["db:migrate"].invoke
-    end
-
-    def get_connection_config(db_counter)
-      default_settings = config["test"].clone()
-      default_settings['database'] = "#{default_settings['database']}_#{db_counter}"
-      default_settings
-    end
-
-    def config
-      ActiveRecord::Base.configurations
-    end
 
     def redis
       Redis.new(:host => Borg::Config.redis_ip,:port => Borg::Config.redis_port)
@@ -136,7 +86,7 @@ module Borg
       end #end of loop
 
       raise "Error running #{key} tests" if (all_status.any? { |x| x != 0 })
-
     end #end of method remove_file_groups_from_redis
+
   end
 end

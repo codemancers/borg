@@ -2,7 +2,7 @@ module Borg
   class Worker < EM::Connection
     include EM::P::ObjectProtocol
     @@status_reports = []
-    
+
     def receive_object(ruby_object)
       case ruby_object
       when StartBuild
@@ -35,7 +35,7 @@ module Borg
         send_object(BuildStatus.new(1))
       end
     end
-    
+
     def redis
       Redis.new(:host => Borg::Config.redis_ip,:port => Borg::Config.redis_port)
     end
@@ -67,7 +67,7 @@ module Borg
       @@status_reports << last_status
       p @@status_reports
       error_flag = @@status_reports.any? {|x| x.exit_status != 0}
-      
+
       if(error_flag)
         send_object(BuildStatus.new(1))
       else
@@ -80,7 +80,7 @@ module Borg
   class TestRunner < EM::Connection
     attr_accessor :worker
     attr_accessor :runner_type
-    
+
     include EM::P::ObjectProtocol
     def receive_data(data)
       worker.send_object(BuildOutput.new(data))

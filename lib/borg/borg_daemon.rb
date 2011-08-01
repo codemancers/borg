@@ -64,17 +64,17 @@ module Borg
     end
 
     def status
-      @status ||= begin
-                    if pidfile_exists? and process_running?
-                      0
-                    elsif pidfile_exists? # but not process_running
-                      1
-                    else
-                      3
-                    end
-                  end
-
-      return @status
+      return @status if @status
+      begin
+        if pidfile_exists? and process_running?
+          @status = 0
+        elsif pidfile_exists? # but not process_running
+          @status = 1
+        else
+          @status = 3
+        end
+      end
+      @status
     end
 
     def pidfile_exists?; File.exists?(pid_file); end

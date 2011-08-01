@@ -3,20 +3,24 @@ require "eventmachine"
 require "redis"
 require 'socket'
 
-require File.join(File.dirname(__FILE__),'cli')
-require File.join(File.dirname(__FILE__),'file_splitter')
-require File.join(File.dirname(__FILE__),'borg_abstract_adapter')
-require File.join(File.dirname(__FILE__),'borg_daemon')
-require File.join(File.dirname(__FILE__),'borg_config')
-require File.join(File.dirname(__FILE__),'borg_cucumber')
-require File.join(File.dirname(__FILE__),'borg_git')
-require File.join(File.dirname(__FILE__),'borg_messages')
+lib_dir = File.expand_path(File.dirname(__FILE__))
 
-require File.join(File.dirname(__FILE__),'borg_requestor')
-require File.join(File.dirname(__FILE__),'borg_server')
+$LOAD_PATH.unshift lib_dir unless $LOAD_PATH.include?(lib_dir)
 
-require File.join(File.dirname(__FILE__),'borg_test_unit')
-require File.join(File.dirname(__FILE__),'borg_worker')
+require 'cli'
+require 'file_splitter'
+require 'borg_abstract_adapter'
+require 'borg_daemon'
+require 'borg_config'
+require 'borg_cucumber'
+require 'borg_git'
+require 'borg_messages'
+
+require 'borg_requestor'
+require 'borg_server'
+
+require 'borg_test_unit'
+require 'borg_worker'
 
 
 module Borg
