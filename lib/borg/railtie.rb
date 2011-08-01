@@ -8,6 +8,7 @@ lib_dir = File.expand_path(File.dirname(__FILE__))
 $LOAD_PATH.unshift lib_dir unless $LOAD_PATH.include?(lib_dir)
 
 require 'cli'
+
 require 'file_splitter'
 require 'borg_abstract_adapter'
 require 'borg_daemon'
@@ -15,10 +16,8 @@ require 'borg_config'
 require 'borg_cucumber'
 require 'borg_git'
 require 'borg_messages'
-
 require 'borg_requestor'
 require 'borg_server'
-
 require 'borg_test_unit'
 require 'borg_worker'
 
