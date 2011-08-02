@@ -1,5 +1,5 @@
 module Borg
-  class TestUnit
+  class TestUnitRunner
     include AbstractAdapter
 
     def run(n = 3)
